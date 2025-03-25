@@ -5,10 +5,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+type CommandParam struct {
+}
+
 var (
-	Port    int64
-	Config  string
-	Version string
+	Port     int64
+	Config   string
+	Username string
+	Version  string
+	Home     string
 )
 
 var rootCmd = &cobra.Command{
@@ -23,6 +28,8 @@ func init() {
 	rootCmd.PersistentFlags().Int64VarP(&Port, "port", "p", 8080, "服务端口")
 	rootCmd.PersistentFlags().StringVarP(&Config, "config", "c", "config.yaml", "配置文件")
 	rootCmd.PersistentFlags().StringVarP(&Version, "version", "v", "v1.0.0", "版本号")
+	rootCmd.PersistentFlags().StringVarP(&Home, "home", "h", "home", "目录")
+	rootCmd.PersistentFlags().StringVarP(&Username, "username", "u", "admin", "用户名")
 }
 
 func Execute() {

@@ -1,0 +1,14 @@
+go get -u github.com/spf13/cobra
+go get gitee.com/molonglove/goboot/gin/binding
+go get gopkg.in/yaml.v3
+
+
+
+
+
+
+
+
+
+go run main.go server --port 9090
+

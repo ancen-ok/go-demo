@@ -1,6 +1,8 @@
 go get -u github.com/spf13/cobra
 go get gitee.com/molonglove/goboot/gin/binding
 go get gopkg.in/yaml.v3
+go get github.com/mitchellh/go-homedir
+go get github.com/redis/go-redis/v9
 
 
 

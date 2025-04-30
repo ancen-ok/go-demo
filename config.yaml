@@ -3,21 +3,21 @@ db:
     db_name: test_db
     host: 127.0.0.1
     port: 3306
-    user: root
-    password: root
+    username: root
+    password: 123456
 
 redis:
-    addr: "127.0.0.1:6379"
-    password: ""
+    host: 127.0.0.1
+    port: 6379
+    password: 
     db: 1
-system:
-    mode: debug   #release/debug
-    ip: 127.0.0.1
+web:
+    model: release   #release/debug
     port: 8080
 jwt:
     expires: 8  #有效期
-    issuer: "ancien"
-    secret: "123456"
+    issuer: ancien
+    secret: 123456
 upload:
     size: 2
     dir: images

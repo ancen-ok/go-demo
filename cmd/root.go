@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"go-demo/router"
 	"net/http"
 )
 
@@ -21,8 +22,8 @@ var rootCmd = &cobra.Command{
 	Use:   "help",
 	Short: "帮助你快速配置服务",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("初始化init应用程序，端口: %d, 用户名: %s, Version: %v\n", Param.Port, Param.Username, Param.Version)
-		//startServer(defaultPort)
+		fmt.Println("server start ")
+		router.Run(Param.Port)
 	},
 }
 

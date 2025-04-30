@@ -16,10 +16,13 @@ var Engine *gin.Engine
 
 func initRouter() {
 	core.InitCore()
+	gin.SetMode(core.Config.Web.RunModel)
 	core.Log.Info("初始化配置文件成功")
 	Engine = gin.Default(core.Log)
 	Engine.Use(CorsMiddle()) //跨域
 	Engine.Use(JwtMiddle())  //jwt
+	fmt.Println("当前 gin 模式：", gin.Mode())
+
 }
 func Run(port int64) {
 	initRouter()

@@ -1,3 +1,16 @@
+# 服务配置
+web:
+    model: debug   #release/debug :可以参看传参sql对应
+    port: 8080
+    context-path: api
+    read-timeout: 10
+    write-timeout: 10
+    max-header-bytes: 50
+
+    # 白名单
+    white-list:  ["/user/login", "/user/register", "/user/captcha", "/user/captchaImage"]
+
+# 数据库配置
 db:
     mode: mysql
     db_name: test_db
@@ -5,19 +18,21 @@ db:
     port: 3306
     username: root
     password: 123456
+    schema: public
 
+# Redis配置
 redis:
     host: 127.0.0.1
     port: 6379
     password: 
-    db: 1
-web:
-    model: release   #release/debug
-    port: 8080
+    db: 0
+
+# jwt配置信息
 jwt:
-    expires: 8  #有效期
+    expires: 3000  #有效期
     issuer: ancien
     secret: 123456
+
 upload:
     size: 2
     dir: images

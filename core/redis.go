@@ -28,8 +28,8 @@ func (c *CacheRedis) GetKey(key string) (string, error) {
 }
 
 // Delete 删除一个或多个 key
-func (c *CacheRedis) Delete(keys ...string) (int64, error) {
-	return c.client.Del(ctx, keys...).Result()
+func (c *CacheRedis) Delete(keys ...string) error {
+	return c.client.Del(ctx, keys...).Err()
 }
 
 // Exist 判断 key 是否存在

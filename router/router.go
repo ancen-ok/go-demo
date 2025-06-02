@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"gitee.com/molonglove/goboot/gin"
+	"go-demo/app/controller"
 	"go-demo/core"
 	"net/http"
 	"os"
@@ -20,8 +21,18 @@ func initRouter() {
 	core.Log.Info("初始化配置文件成功")
 	Engine = gin.Default(core.Log)
 	Engine.Use(CorsMiddle()) //跨域
-	Engine.Use(JwtMiddle())  //jwt
-	fmt.Println("当前 gin 模式：", gin.Mode())
+	//Engine.Use(JwtMiddle())  //jwt
+	root := Engine.Group(core.Config.Web.ContextPath)
+	{
+		user := root.Group("user")
+		{
+			user.GET("captchaImage", controller.User.CaptchaImage) //获取验证码
+			user.POST("login", controller.User.Login)              //登录
+			user.GET("GetUserInfo", controller.User.GetUserInfo)   //用户信息
+			user.POST("page", controller.User.Page)                //分页
+
+		}
+	}
 
 }
 func Run(port int64) {

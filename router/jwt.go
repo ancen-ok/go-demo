@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"gitee.com/molonglove/goboot/gin"
+	"go-demo/app/models/response"
+	vo2 "go-demo/app/models/vo"
 	"go-demo/core"
-	"go-demo/models/response"
-	"go-demo/models/vo"
 	"net/http"
 	"strings"
 	"time"
@@ -27,15 +27,15 @@ func authPath(list []string, path string) bool {
 func JwtMiddle() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			parseJwt = func(token string) (*vo.UserClaims, bool, float64, error) {
+			parseJwt = func(token string) (*vo2.UserClaims, bool, float64, error) {
 				var (
 					key    string
 					value  string
 					expire float64
-					user   vo.UserClaims
+					user   vo2.UserClaims
 					err    error
 				)
-				key = fmt.Sprintf("%s:%s", vo.RedisToken, token)
+				key = fmt.Sprintf("%s:%s", vo2.RedisToken, token)
 				// 判断是否过期
 				if expire = core.Cache.IsExpire(key); expire == -2 {
 					return nil, true, 0, nil
@@ -53,7 +53,7 @@ func JwtMiddle() gin.HandlerFunc {
 
 			WhiteList = core.Config.Web.Whites()
 			path      = c.Request.URL.Path
-			user      *vo.UserClaims
+			user      *vo2.UserClaims
 			isExpired bool
 			expire    float64
 			auth      string
@@ -67,7 +67,7 @@ func JwtMiddle() gin.HandlerFunc {
 		} else {
 
 			//获取请求头信息
-			if auth = c.GetHeader(vo.RedisCaptcha); auth == "" {
+			if auth = c.GetHeader(vo2.RedisCaptcha); auth == "" {
 				c.Abort()
 				core.Log.Error("当前请求路径[%s], 认证信息不存在", path)
 				c.JSON(http.StatusUnauthorized, response.Fail(response.AuthNotExist))
@@ -90,7 +90,7 @@ func JwtMiddle() gin.HandlerFunc {
 			//续期
 			if expire*3 <= float64(core.Config.Jwt.ExpiresTime) {
 				core.Log.Info("Token剩余时间小于1/3，系统进行续期操作")
-				key := fmt.Sprintf("%s:%s", vo.RedisToken, auth)
+				key := fmt.Sprintf("%s:%s", vo2.RedisToken, auth)
 				if _, err = core.Cache.KeyExpired(
 					key,
 					time.Duration(core.Config.Jwt.ExpiresTime)*time.Minute,
@@ -99,9 +99,9 @@ func JwtMiddle() gin.HandlerFunc {
 				}
 			}
 
-			c.Set(vo.ClaimsInfo, user)
+			c.Set(vo2.ClaimsInfo, user)
 			c.Next()
-			c.Set(vo.ClaimsInfo, "")
+			c.Set(vo2.ClaimsInfo, "")
 		}
 
 	}

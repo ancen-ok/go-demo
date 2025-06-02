@@ -9,10 +9,10 @@ func (b BusinessError) Error() string {
 	return b.Msg
 }
 
-func NewBusinessError(code HttpCode, msg string) *BusinessError {
+func NewBusinessError(code HttpCode) *BusinessError {
 	return &BusinessError{
 		Code: code,
-		Msg:  msg,
+		Msg:  Menus[code],
 	}
 }
 

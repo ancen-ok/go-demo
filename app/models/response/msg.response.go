@@ -77,10 +77,10 @@ func Ok(date any) Message {
 	}
 }
 
-func OkMsg(code HttpCode, msg string, date any) Message {
+func OkMsg(code HttpCode, date any) Message {
 	return Message{
 		Code: code,
-		Msg:  msg,
+		Msg:  Menus[code],
 		Data: date,
 	}
 }
